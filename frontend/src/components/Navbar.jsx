@@ -39,7 +39,7 @@ export default function Navbar() {
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.7, ease: "easeOut" }}
-        className="fixed top-4 left-1/2 z-50 w-[95%] max-w-6xl -translate-x-1/2"
+        className="fixed top-4 inset-x-0 z-50 mx-auto w-[95%] max-w-6xl"
         data-testid="main-navbar"
       >
         <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/60 dark:bg-black/60 backdrop-blur-2xl shadow-2xl glass supports-[not(backdrop-filter)]:bg-black/90">
