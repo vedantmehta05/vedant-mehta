@@ -1,0 +1,114 @@
+{
+  "theme": "dark/light/system with smooth animated switching",
+  "typography": {
+    "headings": {
+      "fontFamily": "Manrope",
+      "styles": "font-black tracking-tight to tracking-tighter. Use fluid scales max text-6xl. No standard bold, use black or light."
+    },
+    "body": {
+      "fontFamily": "Geist",
+      "styles": "leading-relaxed text-base md:text-lg. High legibility."
+    },
+    "mono": {
+      "fontFamily": "Geist Mono",
+      "styles": "uppercase tracking-[0.2em] text-xs for labels and overlines."
+    }
+  },
+  "colors": {
+    "dark": {
+      "background": "#050505",
+      "surface": "#111111",
+      "primary": "#3B82F6",
+      "indigo": "#6366F1",
+      "purple": "#8B5CF6",
+      "cyan": "#06B6D4",
+      "accent": {
+        "emerald": "#10B981",
+        "pink": "#EC4899",
+        "orange": "#F97316"
+      },
+      "text": "#FAFAFA",
+      "textMuted": "#A1A1AA"
+    },
+    "light": {
+      "background": "#FAFAFA",
+      "surface": "#FFFFFF",
+      "primary": "#2563EB",
+      "indigo": "#4F46E5",
+      "purple": "#7C3AED",
+      "cyan": "#0891B2",
+      "accent": {
+        "emerald": "#059669",
+        "pink": "#DB2777",
+        "orange": "#EA580C"
+      },
+      "text": "#09090B",
+      "textMuted": "#52525B"
+    }
+  },
+  "visual_enhancers": {
+    "gradients": "Tasteful mesh gradients using Primary (Blue/Purple/Cyan). Avoid full-screen gradients. Use as glowing orbs behind glass panels or text clip backgrounds.",
+    "glassmorphism": "Crystal Glass variant: backdrop-blur-2xl, saturated background (bg-black/60 dark, bg-white/70 light), 1px delicate inner stroke (border-white/10 dark, border-black/5 light).",
+    "borders": "Gradient borders on featured cards using mask-image or p-[1px] gradient background wrappers.",
+    "shadows": "Ambient + Direct layered shadows. Colored glowing shadows for active elements (e.g., shadow-[0_0_20px_rgba(59,130,246,0.3)]).",
+    "textures": "Subtle noise/grain overlay fixed to viewport with mix-blend-overlay and opacity-20."
+  },
+  "grids_layouts": {
+    "spacing": "Generous spacing philosophy. Use p-8, p-12, p-16 inside sections. py-24 or py-32 for section wrappers.",
+    "bento_grid": "Mode A (Tetris Grid) for Projects and About sections. grid-cols-1 md:grid-cols-12 gap-8. Mix col-span-8 and col-span-4 to create asymmetry.",
+    "alignment": "Optical alignment. Left-align text content. Avoid generic center-everything."
+  },
+  "motion_and_interactions": {
+    "scrolling": "Lenis for smooth scrolling momentum.",
+    "cursor": "Custom framer-motion cursor with a subtle glow blending with the background (mix-blend-difference).",
+    "micro_interactions": "Magnetic buttons, cursor glow hover effects on cards, ripple effects on click, slight tilt (framer-motion 3D) on project cards.",
+    "reveal": "Staggered scroll reveals for lists and grid items. Elements slide up slightly with opacity fade.",
+    "particles": "TSParticles or lightweight custom floating dust in the hero background."
+  },
+  "components": {
+    "navigation": "Floating glass navbar. Sticky top, z-50. Includes scroll progress indicator (thin gradient line at bottom edge of nav). Active section highlights.",
+    "hero": "Animated typing effect for title, floating geometric shapes, glowing mesh gradient orbs, prominent CTA buttons with magnetic effect.",
+    "timeline": "Vertical line with neon glowing dot for current role. Hovering over roles highlights the path.",
+    "skills": "Floating logo cards. Animated progress bars that fill on scroll.",
+    "charts": "Recharts radar chart or circular progress for technical expertise matrix.",
+    "cards": "Glass cards with gradient borders. Aceternity-style tracing beam on the premium featured projects."
+  },
+  "accessibility": {
+    "contrast": "Ensure APCA contrast standards. High contrast for text over gradients. Use text-shadow if needed.",
+    "motion": "Respect prefers-reduced-motion. Add aria-hidden to purely decorative elements.",
+    "testing": "All interactive elements MUST have data-testid attributes."
+  },
+  "media": {
+    "images": [
+      {
+        "category": "hero_profile",
+        "url": "https://images.unsplash.com/photo-1666728514990-dd5bf3565324?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwyfHxtYW4lMjB3ZWFyaW5nJTIwYmVpZ2UlMjBibGF6ZXJ8ZW58MHx8fHwxNzg0MDMwODQzfDA&ixlib=rb-4.1.0&q=85",
+        "description": "Formal man in beige blazer for the About/Hero section"
+      },
+      {
+        "category": "dark_background",
+        "url": "https://images.unsplash.com/photo-1557264337-e8a93017fe92?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHw0fHxhYnN0cmFjdCUyMGZ1dHVyaXN0aWMlMjBkYXJrfGVufDB8fHx8MTc4NDAzMDg0M3ww&ixlib=rb-4.1.0&q=85",
+        "description": "Abstract futuristic dark spiral texture for hero/footer dark mode"
+      },
+      {
+        "category": "light_background",
+        "url": "https://images.unsplash.com/photo-1496096265110-f83ad7f96608?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1Mjh8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMGxpZ2h0JTIwdGVjaCUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzg0MDMwODQzfDA&ixlib=rb-4.1.0&q=85",
+        "description": "White and black digital lines texture for light mode backgrounds"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "You MUST use Framer Motion for all complex animations (stagger, layout, magnetic, 3D tilt).",
+    "DO NOT use generic centered text for hero sections. Use a stark left-aligned heavy typographic layout (Tetris bento) for a tech/SaaS premium look.",
+    "Implement theme toggling (Dark, Light, System) seamlessly. Avoid flashing. Store preference in local storage or use next-themes equivalent for React.",
+    "Use Lucide React or Phosphor Icons for sharp, tech-style icons.",
+    "Use standard React (CRA/Vite layout) as requested. Do not set up Next.js.",
+    "Do not use transparent backgrounds for the floating nav. Use backdrop-blur-xl with a tinted background (bg-black/60 or bg-white/70).",
+    "For gradient borders, wrap the element in a div with a linear-gradient background and p-[1px], inner div should have the surface color.",
+    "Avoid `transition: all`. Specify exact transitions like `transition: transform 0.3s ease, opacity 0.3s ease`.",
+    "Add a custom cursor using framer-motion if possible, blending with the background (mix-blend-difference).",
+    "Build the tech expertise chart using Recharts (RadarChart).",
+    "Ensure 'data-testid' is on all actionable elements."
+  ],
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": "Focus on high-end execution. No AI slop. Create depth with z-index, glassmorphism, and subtle ambient shadows. Never center-align the whole app container. Use generous spacing (p-12 to py-32). Micro-animations are mandatory on all interactives."
+}
