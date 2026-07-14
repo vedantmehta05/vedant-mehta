@@ -87,7 +87,7 @@ async def download_resume():
     )
 
 
-@api_router.post("/contact", response_model=ContactMessage)
+@api_router.post("/contact", response_model=ContactMessage, response_model_by_alias=False)
 async def create_contact_message(payload: ContactMessageCreate, background_tasks: BackgroundTasks):
     contact = ContactMessage(**payload.model_dump())
     result = await contacts_collection.insert_one(contact.to_mongo())
@@ -104,7 +104,7 @@ async def create_contact_message(payload: ContactMessageCreate, background_tasks
     return contact
 
 
-@api_router.get("/contact", response_model=list[ContactMessage])
+@api_router.get("/contact", response_model=list[ContactMessage], response_model_by_alias=False)
 async def list_contact_messages():
     docs = await contacts_collection.find().sort("created_at", -1).to_list(200)
     return [ContactMessage.from_mongo(doc) for doc in docs]

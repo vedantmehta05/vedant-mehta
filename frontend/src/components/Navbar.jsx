@@ -4,7 +4,6 @@ import { Menu, X, Download } from "lucide-react";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { scrollToSection } from "@/lib/lenis";
 import ThemeToggle from "@/components/ThemeToggle";
-import { Button } from "@/components/ui/button";
 import ScrollProgress from "@/components/ScrollProgress";
 import { personal } from "@/data/resumeData";
 
