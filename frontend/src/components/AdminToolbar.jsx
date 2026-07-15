@@ -8,11 +8,11 @@ export default function AdminToolbar() {
 
   return (
     <div
-      className="fixed bottom-4 right-4 z-[70] flex items-center gap-3 rounded-full border border-emerald/30 bg-card/95 backdrop-blur-xl px-4 py-2.5 shadow-2xl"
+      className="fixed bottom-4 right-4 z-[70] flex items-center gap-2 sm:gap-3 rounded-full border border-emerald/30 bg-card/95 backdrop-blur-xl px-3 sm:px-4 py-2 sm:py-2.5 shadow-2xl"
       data-testid="admin-toolbar"
     >
       <span className="flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-emerald">
-        <ShieldCheck className="h-3.5 w-3.5" /> Admin Mode
+        <ShieldCheck className="h-3.5 w-3.5" /> <span className="hidden sm:inline">Admin Mode</span>
       </span>
       <button
         onClick={logout}
