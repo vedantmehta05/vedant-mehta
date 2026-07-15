@@ -1,19 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Download, Github, Linkedin, Globe, Mail, Camera, MapPin, Sparkles } from "lucide-react";
+import { ArrowRight, Download, Github, Linkedin, Mail, Camera, MapPin, Sparkles } from "lucide-react";
 import ParticleField from "@/components/ParticleField";
 import MagneticButton from "@/components/MagneticButton";
+import SectionEditButton from "@/components/SectionEditButton";
 import { Button } from "@/components/ui/button";
 import { useTypewriter } from "@/hooks/use-typewriter";
 import { scrollToSection } from "@/lib/lenis";
 import { api, assetUrl } from "@/lib/api";
-import { personal } from "@/data/resumeData";
+import { useContent } from "@/hooks/use-content";
+import { useAuth } from "@/hooks/use-auth";
 import { useToast } from "@/hooks/use-toast";
 
 const ROLES = [
   "Senior Software Engineer",
-  "AI-Powered Backend Architect",
-  "Cloud & Blockchain Engineer",
+  "Backend Architect & Systems Strategist",
+  "AI, Cloud & Blockchain Engineer",
 ];
 
 export default function Hero() {
@@ -21,6 +23,9 @@ export default function Hero() {
   const [photoUrl, setPhotoUrl] = useState("");
   const fileInputRef = useRef(null);
   const { toast } = useToast();
+  const { content } = useContent();
+  const { isAdmin } = useAuth();
+  const personal = content.personal;
 
   useEffect(() => {
     api
@@ -53,6 +58,15 @@ export default function Hero() {
     >
       {/* Background layers */}
       <div className="absolute inset-0 -z-10 bg-background">
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 opacity-[0.05] dark:opacity-[0.07]"
+          style={{
+            backgroundImage:
+              "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
+            backgroundSize: "56px 56px",
+          }}
+        />
         <div className="absolute top-[-10%] left-[-10%] h-[45vw] w-[45vw] rounded-full bg-primary/25 blur-[100px] animate-glow" />
         <div className="absolute bottom-[-15%] right-[-10%] h-[40vw] w-[40vw] rounded-full bg-purple/20 blur-[110px] animate-glow" style={{ animationDelay: "1.5s" }} />
         <div className="absolute top-[30%] right-[15%] h-[22vw] w-[22vw] rounded-full bg-cyan/15 blur-[90px] animate-glow" style={{ animationDelay: "3s" }} />
@@ -78,6 +92,12 @@ export default function Hero() {
         animate={{ rotate: [45, 90, 45], y: [0, -16, 0] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
       />
+
+      {isAdmin && (
+        <div className="absolute top-24 right-4 z-20">
+          <SectionEditButton section="personal" label="Hero / Personal Info" />
+        </div>
+      )}
 
       <div className="container relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         {/* Left content */}
@@ -159,18 +179,6 @@ export default function Hero() {
                 <Github className="h-4.5 w-4.5" />
               </a>
             )}
-            {personal.portfolio && (
-              <a
-                href={personal.portfolio}
-                target="_blank"
-                rel="noreferrer"
-                data-testid="hero-social-portfolio"
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-border transition-colors hover:border-primary hover:text-primary hover:bg-primary/10"
-                aria-label="Portfolio"
-              >
-                <Globe className="h-4.5 w-4.5" />
-              </a>
-            )}
             <a
               href={`mailto:${personal.email}`}
               data-testid="hero-social-email"
@@ -201,22 +209,26 @@ export default function Hero() {
                 />
               )}
             </div>
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              data-testid="hero-change-photo-button"
-              aria-label="Change profile photo"
-              className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-110"
-            >
-              <Camera className="h-4.5 w-4.5" />
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/jpeg,image/png,image/webp"
-              className="hidden"
-              data-testid="hero-photo-file-input"
-              onChange={handlePhotoChange}
-            />
+            {isAdmin && (
+              <>
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  data-testid="hero-change-photo-button"
+                  aria-label="Change profile photo"
+                  className="absolute bottom-3 right-3 flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-110"
+                >
+                  <Camera className="h-4.5 w-4.5" />
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp"
+                  className="hidden"
+                  data-testid="hero-photo-file-input"
+                  onChange={handlePhotoChange}
+                />
+              </>
+            )}
 
             <motion.div
               className="absolute -top-6 -left-6 rounded-xl border border-border bg-card/90 backdrop-blur-xl px-4 py-2.5 shadow-xl hidden sm:block"

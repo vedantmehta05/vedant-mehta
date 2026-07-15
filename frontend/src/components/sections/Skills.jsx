@@ -3,7 +3,9 @@ import { motion } from "framer-motion";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
-import { skillCategories } from "@/data/resumeData";
+import SectionEditButton from "@/components/SectionEditButton";
+import { useContent } from "@/hooks/use-content";
+import { useAuth } from "@/hooks/use-auth";
 
 function SkillBar({ skill, index }) {
   return (
@@ -25,6 +27,9 @@ function SkillBar({ skill, index }) {
 }
 
 export default function Skills() {
+  const { content } = useContent();
+  const { isAdmin } = useAuth();
+  const skillCategories = content.skillCategories;
   const [activeTab, setActiveTab] = useState(skillCategories[0].category);
 
   return (
@@ -35,10 +40,13 @@ export default function Skills() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-14 max-w-2xl"
+          className="mb-14 max-w-2xl flex items-start justify-between gap-4"
         >
+          <div>
           <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">Skills</p>
           <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight">Technical arsenal</h2>
+          </div>
+          {isAdmin && <SectionEditButton section="skillCategories" label="Skills" />}
         </motion.div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} data-testid="skills-tabs">

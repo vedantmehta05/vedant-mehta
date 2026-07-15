@@ -3,9 +3,15 @@ import { motion } from "framer-motion";
 import { Briefcase, MapPin, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { experience } from "@/data/resumeData";
+import SectionEditButton from "@/components/SectionEditButton";
+import { useContent } from "@/hooks/use-content";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function CareerJourney() {
+  const { content } = useContent();
+  const { isAdmin } = useAuth();
+  const experience = content.experience;
+
   return (
     <section id="journey" className="relative py-24 md:py-32" data-testid="career-journey-section">
       <div className="container">
@@ -14,10 +20,13 @@ export default function CareerJourney() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-16 max-w-2xl"
+          className="mb-16 max-w-2xl flex items-start justify-between gap-4"
         >
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">Career Journey</p>
-          <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight">Where I've built</h2>
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">Career Journey</p>
+            <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight">Where I've built</h2>
+          </div>
+          {isAdmin && <SectionEditButton section="experience" label="Career Journey" />}
         </motion.div>
 
         <div className="relative pl-8 md:pl-12">

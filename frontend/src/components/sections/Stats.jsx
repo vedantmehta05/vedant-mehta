@@ -2,7 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { useCountUp } from "@/hooks/use-count-up";
-import { stats } from "@/data/resumeData";
+import SectionEditButton from "@/components/SectionEditButton";
+import { useContent } from "@/hooks/use-content";
+import { useAuth } from "@/hooks/use-auth";
 
 function StatCard({ stat, index }) {
   const { ref, value } = useCountUp(stat.value, 1600);
@@ -29,9 +31,18 @@ function StatCard({ stat, index }) {
 }
 
 export default function Stats() {
+  const { content } = useContent();
+  const { isAdmin } = useAuth();
+  const stats = content.stats;
+
   return (
     <section className="relative py-20 md:py-24" data-testid="stats-section">
       <div className="container">
+        {isAdmin && (
+          <div className="flex justify-end mb-4">
+            <SectionEditButton section="stats" label="Experience Highlights" />
+          </div>
+        )}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-5">
           {stats.map((stat, i) => (
             <StatCard key={stat.label} stat={stat} index={i} />

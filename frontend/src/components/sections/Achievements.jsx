@@ -2,11 +2,17 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Trophy, Star, Medal } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { achievements } from "@/data/resumeData";
+import SectionEditButton from "@/components/SectionEditButton";
+import { useContent } from "@/hooks/use-content";
+import { useAuth } from "@/hooks/use-auth";
 
 const icons = { Competition: Trophy, "Academic Award": Medal, Award: Star, Recognition: Star };
 
 export default function Achievements() {
+  const { content } = useContent();
+  const { isAdmin } = useAuth();
+  const achievements = content.achievements;
+
   return (
     <section id="achievements" className="relative py-24 md:py-32" data-testid="achievements-section">
       <div className="container">
@@ -15,10 +21,13 @@ export default function Achievements() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-14 max-w-2xl"
+          className="mb-14 max-w-2xl flex items-start justify-between gap-4"
         >
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">Achievements</p>
-          <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight">Recognition & milestones</h2>
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">Achievements</p>
+            <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight">Recognition & milestones</h2>
+          </div>
+          {isAdmin && <SectionEditButton section="achievements" label="Achievements" />}
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

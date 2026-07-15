@@ -3,20 +3,26 @@ import { motion } from "framer-motion";
 import { Compass, Lightbulb, Target, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { about } from "@/data/resumeData";
+import SectionEditButton from "@/components/SectionEditButton";
+import { useContent } from "@/hooks/use-content";
+import { useAuth } from "@/hooks/use-auth";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   show: (i) => ({ opacity: 1, y: 0, transition: { duration: 0.6, delay: i * 0.1, ease: "easeOut" } }),
 };
 
-const cards = [
-  { icon: Lightbulb, title: "Philosophy", text: about.philosophy, color: "text-primary" },
-  { icon: Compass, title: "Engineering Mindset", text: about.mindset, color: "text-purple" },
-  { icon: Target, title: "Goals & Direction", text: about.goals, color: "text-cyan" },
-];
-
 export default function About() {
+  const { content } = useContent();
+  const { isAdmin } = useAuth();
+  const about = content.about;
+
+  const cards = [
+    { icon: Lightbulb, title: "Philosophy", text: about.philosophy, color: "text-primary" },
+    { icon: Compass, title: "Engineering Mindset", text: about.mindset, color: "text-purple" },
+    { icon: Target, title: "Goals & Direction", text: about.goals, color: "text-cyan" },
+  ];
+
   return (
     <section id="about" className="relative py-24 md:py-32" data-testid="about-section">
       <div className="container">
@@ -25,10 +31,13 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-14 max-w-2xl"
+          className="mb-14 max-w-2xl flex items-start justify-between gap-4"
         >
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">About Me</p>
-          <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight mb-5">The complete story</h2>
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">About Me</p>
+            <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight mb-5">The complete story</h2>
+          </div>
+          {isAdmin && <SectionEditButton section="about" label="About Me" />}
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 mb-10">

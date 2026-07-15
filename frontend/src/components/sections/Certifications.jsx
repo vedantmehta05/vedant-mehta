@@ -3,9 +3,15 @@ import { motion } from "framer-motion";
 import { BadgeCheck, ExternalLink } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { certifications } from "@/data/resumeData";
+import SectionEditButton from "@/components/SectionEditButton";
+import { useContent } from "@/hooks/use-content";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function Certifications() {
+  const { content } = useContent();
+  const { isAdmin } = useAuth();
+  const certifications = content.certifications;
+
   return (
     <section id="certifications" className="relative py-24 md:py-32" data-testid="certifications-section">
       <div className="container">
@@ -14,10 +20,13 @@ export default function Certifications() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-14 max-w-2xl"
+          className="mb-14 max-w-2xl flex items-start justify-between gap-4"
         >
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">Certifications</p>
-          <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight">Verified knowledge</h2>
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">Certifications</p>
+            <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight">Verified knowledge</h2>
+          </div>
+          {isAdmin && <SectionEditButton section="certifications" label="Certifications" />}
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

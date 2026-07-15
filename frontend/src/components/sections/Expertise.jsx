@@ -2,17 +2,23 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from "recharts";
 import { Card } from "@/components/ui/card";
-import { expertiseRadar } from "@/data/resumeData";
+import SectionEditButton from "@/components/SectionEditButton";
+import { useContent } from "@/hooks/use-content";
+import { useAuth } from "@/hooks/use-auth";
 
 function CustomTick({ payload, x, y, textAnchor, cx, cy, ...rest }) {
   return (
-    <text x={x} y={y} textAnchor={textAnchor} className="fill-muted-foreground text-[11px] font-medium" {...rest}>
+    <text x={x} y={y} textAnchor={textAnchor} fill="hsl(var(--muted-foreground))" fontSize={11} fontWeight={500} {...rest}>
       {payload.value}
     </text>
   );
 }
 
 export default function Expertise() {
+  const { content } = useContent();
+  const { isAdmin } = useAuth();
+  const expertiseRadar = content.expertiseRadar;
+
   return (
     <section id="expertise" className="relative py-24 md:py-32" data-testid="expertise-section">
       <div className="container">
@@ -21,10 +27,13 @@ export default function Expertise() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-14 max-w-2xl"
+          className="mb-14 max-w-2xl flex items-start justify-between gap-4"
         >
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">Technical Expertise</p>
-          <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight">Depth across the stack</h2>
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">Technical Expertise</p>
+            <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight">Depth across the stack</h2>
+          </div>
+          {isAdmin && <SectionEditButton section="expertiseRadar" label="Technical Expertise" />}
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">

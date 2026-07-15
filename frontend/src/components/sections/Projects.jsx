@@ -4,9 +4,14 @@ import { Layers, ArrowUpRight, Github, ExternalLink } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { projects } from "@/data/resumeData";
+import SectionEditButton from "@/components/SectionEditButton";
+import { useContent } from "@/hooks/use-content";
+import { useAuth } from "@/hooks/use-auth";
 
 export default function Projects() {
+  const { content } = useContent();
+  const { isAdmin } = useAuth();
+  const projects = content.projects;
   const [selected, setSelected] = useState(null);
 
   return (
@@ -17,10 +22,13 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-14 max-w-2xl"
+          className="mb-14 max-w-2xl flex items-start justify-between gap-4"
         >
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">Featured Projects</p>
-          <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight">Things I've built</h2>
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.25em] text-primary mb-3">Featured Projects</p>
+            <h2 className="text-4xl sm:text-5xl font-heading font-extrabold tracking-tight">Things I've built</h2>
+          </div>
+          {isAdmin && <SectionEditButton section="projects" label="Featured Projects" />}
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

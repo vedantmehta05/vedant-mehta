@@ -5,7 +5,7 @@ import { useActiveSection } from "@/hooks/use-active-section";
 import { scrollToSection } from "@/lib/lenis";
 import ThemeToggle from "@/components/ThemeToggle";
 import ScrollProgress from "@/components/ScrollProgress";
-import { personal } from "@/data/resumeData";
+import { useContent } from "@/hooks/use-content";
 
 const NAV_ITEMS = [
   { id: "home", label: "Home" },
@@ -21,6 +21,8 @@ const NAV_ITEMS = [
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const active = useActiveSection(NAV_ITEMS.map((n) => n.id));
+  const { content } = useContent();
+  const personal = content.personal;
 
   useEffect(() => {
     if (mobileOpen) document.body.style.overflow = "hidden";
@@ -42,7 +44,7 @@ export default function Navbar() {
         className="fixed top-4 inset-x-0 z-50 mx-auto w-[95%] max-w-6xl"
         data-testid="main-navbar"
       >
-        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-black/60 dark:bg-black/60 backdrop-blur-2xl shadow-2xl glass supports-[not(backdrop-filter)]:bg-black/90">
+        <div className="relative rounded-2xl border border-white/10 bg-black/60 dark:bg-black/60 backdrop-blur-2xl shadow-2xl glass supports-[not(backdrop-filter)]:bg-black/90">
           <div className="flex items-center justify-between px-4 sm:px-6 py-3">
             <button
               onClick={() => handleNav("home")}
@@ -83,9 +85,7 @@ export default function Navbar() {
               >
                 <Download className="h-3.5 w-3.5" /> Resume
               </a>
-              <div className="[&_button]:border-white/15 [&_button]:text-white [&_button]:bg-white/5 [&_button:hover]:bg-white/15">
-                <ThemeToggle />
-              </div>
+              <ThemeToggle buttonClassName="border-white/15 text-white bg-white/5 hover:bg-white/15" />
               <button
                 data-testid="mobile-menu-toggle-button"
                 onClick={() => setMobileOpen((o) => !o)}
@@ -96,7 +96,9 @@ export default function Navbar() {
               </button>
             </div>
           </div>
-          <ScrollProgress />
+          <div className="absolute inset-x-0 bottom-0 h-[2px] overflow-hidden rounded-b-2xl">
+            <ScrollProgress />
+          </div>
         </div>
       </motion.header>
 

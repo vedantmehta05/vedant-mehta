@@ -9,7 +9,7 @@ const options = [
   { key: "system", icon: Monitor, label: "System" },
 ];
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ buttonClassName = "" }) {
   const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -29,7 +29,7 @@ export default function ThemeToggle() {
         data-testid="theme-toggle-button"
         onClick={() => setOpen((o) => !o)}
         aria-label="Toggle theme"
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/50 transition-colors hover:bg-accent"
+        className={`flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background/50 transition-colors hover:bg-accent ${buttonClassName}`}
       >
         <Active className="h-4 w-4" />
       </button>

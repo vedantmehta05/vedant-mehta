@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Linkedin, Globe, Download, Send, Loader2 } from "lucide-react";
+import { Mail, Phone, MapPin, Linkedin, Download, Send, Loader2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -8,21 +8,22 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import MagneticButton from "@/components/MagneticButton";
 import { useToast } from "@/hooks/use-toast";
-import { api } from "@/lib/api";
-import { personal } from "@/data/resumeData";
-
-const contactLinks = [
-  { icon: Mail, label: "Email", value: personal.email, href: `mailto:${personal.email}`, testid: "contact-email" },
-  { icon: Phone, label: "Phone", value: personal.phone, href: `tel:${personal.phone}`, testid: "contact-phone" },
-  { icon: MapPin, label: "Location", value: personal.location, href: null, testid: "contact-location" },
-  { icon: Linkedin, label: "LinkedIn", value: "vedantmehta5", href: personal.linkedin, testid: "contact-linkedin" },
-  { icon: Globe, label: "Portfolio", value: "View Site", href: personal.portfolio, testid: "contact-portfolio" },
-];
+import { api, formatApiErrorDetail } from "@/lib/api";
+import { useContent } from "@/hooks/use-content";
 
 export default function Contact() {
+  const { content } = useContent();
+  const personal = content.personal;
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+
+  const contactLinks = [
+    { icon: Mail, label: "Email", value: personal.email, href: `mailto:${personal.email}`, testid: "contact-email" },
+    { icon: Phone, label: "Phone", value: personal.phone, href: `tel:${personal.phone}`, testid: "contact-phone" },
+    { icon: MapPin, label: "Location", value: personal.location, href: null, testid: "contact-location" },
+    { icon: Linkedin, label: "LinkedIn", value: "vedantmehta5", href: personal.linkedin, testid: "contact-linkedin" },
+  ];
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -33,8 +34,15 @@ export default function Contact() {
       await api.post("/contact", form);
       toast({ title: "Message sent!", description: "Thanks for reaching out — I'll get back to you soon." });
       setForm({ name: "", email: "", subject: "", message: "" });
-    } catch {
-      toast({ title: "Something went wrong", description: "Please try again or email me directly.", variant: "destructive" });
+    } catch (err) {
+      const isRateLimited = err.response?.status === 429;
+      toast({
+        title: isRateLimited ? "Too many messages" : "Something went wrong",
+        description: isRateLimited
+          ? "Please wait a while before sending another message."
+          : formatApiErrorDetail(err.response?.data?.detail) || "Please try again or email me directly.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }

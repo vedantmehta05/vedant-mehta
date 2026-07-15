@@ -44,3 +44,8 @@ class ContactMessageCreate(BaseModel):
     email: EmailStr
     subject: str
     message: str
+
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str
